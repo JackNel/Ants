@@ -28,42 +28,9 @@ public class Main extends Application {
       ArrayList<Ant> ants = new ArrayList();
         for (int i = 0; i < ANT_COUNT; i++) {
             Random r = new Random();
-            ants.add(new Ant(r.nextInt(WIDTH), r.nextInt(HEIGHT), Color.BLACK));
+            ants.add(new Ant(r.nextInt(WIDTH), r.nextInt(HEIGHT)));
         }
         return ants;
-    }
-
-    Ant aggravateAnt(Ant ant) {
-      ArrayList<Ant> newAnts = ants.stream()
-              .filter((ant2) -> {
-                   return (Math.abs(ant.x - ant2.x) < 10.0)
-                           && (Math.abs(ant.y = ant2.y) < 10.0);
-              })
-              .collect(Collectors.toCollection(ArrayList<Ant>::new));
-
-        if (newAnts.size() == 1) {
-            ant.color = Color.BLACK;
-        }
-        else {
-            ant.color = Color.RED;
-        }
-        return ant;
-      /*  Ant a1 = new Ant();
-        for (a1 : ants) {
-            ArrayList<Ant> ants2 = (ArrayList<Ant>) ants.clone();
-            ants2.remove(a1);
-            for (Ant a2 : ants2) {
-                double xAbs = Math.abs(a1.x - a2.x);
-                double yAbs = Math.abs(a1.y - a2.y);
-                if ((xAbs < 10.0) && (yAbs < 10.0)) {
-                    a1.color = Color.RED;
-                }
-                else {
-                    a1.color = Color.BLACK;
-                }
-            }
-        }
-        return a1;*/
     }
 
     void drawAnts(GraphicsContext context) {
@@ -86,6 +53,40 @@ public class Main extends Application {
         }
         ant.x += randomStep();
         ant.y += randomStep();
+        return ant;
+    }
+
+    Ant aggravateAnt(Ant ant) {
+        ArrayList<Ant> newAnts = ants.stream()
+                                    .filter(ant2 -> {
+                                        return Math.abs(ant.x - ant2.x) <= 10 && Math.abs(ant.y - ant2.y) <= 10;
+                                    })
+                                    .collect(Collectors.toCollection(ArrayList<Ant>::new));
+
+        if (newAnts.size() > 1) {
+            ant.color = Color.RED;
+        }
+        else {
+            ant.color = Color.BLACK;
+        }
+
+         /*  Ant a1 = new Ant();
+        for (a1 : ants) {
+            ArrayList<Ant> ants2 = (ArrayList<Ant>) ants.clone();
+            ants2.remove(a1);
+            for (Ant a2 : ants2) {
+                double xAbs = Math.abs(a1.x - a2.x);
+                double yAbs = Math.abs(a1.y - a2.y);
+                if ((xAbs < 10.0) && (yAbs < 10.0)) {
+                    a1.color = Color.RED;
+                }
+                else {
+                    a1.color = Color.BLACK;
+                }
+            }
+        }
+        return a1;*/
+
         return ant;
     }
 

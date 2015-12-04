@@ -13,9 +13,8 @@ public class Ant {
     public Ant() {
     }
 
-    public Ant(double x, double y, Color color) {
+    public Ant(double x, double y) {
         this.x = x;
         this.y = y;
-        this.color = color;
     }
 }
